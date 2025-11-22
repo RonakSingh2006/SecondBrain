@@ -4,7 +4,6 @@ export function authMiddleware(req, res, next) {
     if (!auth) {
         return res.status(403).send("Not logged In");
     }
-    console.log(auth.split(" "));
     if (auth.split(" ")[0] !== 'Bearer') {
         return res.status(400).send("Invalid Authorization");
     }

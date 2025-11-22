@@ -138,9 +138,18 @@ app.post("/api/v1/content",authMiddleware, async (req,res)=>{
   }
 })
 
-// app.get("/api/v1/content",(req,res)=>{
-  
-// })
+app.get("/api/v1/content",authMiddleware,async (req,res)=>{
+  const userId = req.userId;
+
+  try{
+    const data = await ContentModel.find({userId}).populate('userId','username');
+
+    res.send(data);
+  }
+  catch(err){
+    res.status(500).send("Server Error : "+err);
+  }
+})
 
 // app.delete("/api/v1/content",(req,res)=>{
   

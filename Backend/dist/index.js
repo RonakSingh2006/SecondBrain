@@ -54,7 +54,6 @@ app.post("/api/v1/signin", async (req, res) => {
     else {
         const { username, password } = result.data;
         try {
-            console.log(username);
             const data = await UserModel.findOne({ username: username });
             if (data) {
                 const verify = await bcrypt.compare(password, data.password);
@@ -107,8 +106,16 @@ app.post("/api/v1/content", authMiddleware, async (req, res) => {
         }
     }
 });
-// app.get("/api/v1/content",(req,res)=>{
-// })
+app.get("/api/v1/content", authMiddleware, async (req, res) => {
+    const userId = req.userId;
+    try {
+        const data = await ContentModel.find({ userId }).populate('userId', 'username');
+        res.send(data);
+    }
+    catch (err) {
+        res.status(500).send("Server Error : " + err);
+    }
+});
 // app.delete("/api/v1/content",(req,res)=>{
 // })
 const url = process.env["MONGO_URL"] ?? "mongodb://localhost:27017/brainly";
