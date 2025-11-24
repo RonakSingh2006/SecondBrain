@@ -6,9 +6,10 @@ import mongoose from "mongoose";
 import jwt from "jsonwebtoken"
 import * as z from "zod"
 import bcrypt from "bcrypt"
-import { ContentModel, UserModel } from "./db.js";
+import { ContentModel, UserModel,LinkModel } from "./db.js";
 
 import { authMiddleware } from "./middleWare.js";
+import { generateRandomHash } from "./utils.js";
 
 const app = express();
 
@@ -182,6 +183,59 @@ app.delete("/api/v1/content",authMiddleware,async (req,res)=>{
     return res.status(500).send("Server Error : "+err);
   }
 })
+
+app.post("/api/v1/brain/share",authMiddleware,async (req,res)=>{
+  const shareSchema = z.object({
+    share : z.boolean()
+  });
+
+  const result = shareSchema.safeParse(req.body);
+
+  if(result.success){
+    try{
+      const share = result.data.share;
+
+      if(share){
+        // if link already exsists return prev one
+        let data = await LinkModel.findOne({userId : req.userId});
+
+        let hash;
+
+        if(data){
+          hash = data.hash;
+        }
+        else{
+          hash = generateRandomHash(15);
+          await LinkModel.create({
+            hash : hash,
+            userId : req.userId
+          })
+        }
+        
+
+        res.send({
+          message : "Link Created Sucessfully",
+          link : `http://127.0.0.1/api/v1/brain/:${hash}`
+        });
+      }
+      else{
+        await LinkModel.deleteOne({userId : req.userId});
+
+        res.send("Deleted Sharable Link");
+      }
+    }
+    catch(err){ 
+      res.status(500).send("Server Error : "+err);
+    }
+  }
+  else{
+    res.status(400).send("Invalid Data "+result.error);
+  }
+})
+
+// app.get("/api/v1/brain/:shareLink",(req,res)=>{
+
+// })
 
 const url = process.env["MONGO_URL"] ?? "mongodb://localhost:27017/brainly";
 
