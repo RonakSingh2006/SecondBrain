@@ -1,4 +1,7 @@
+import { Delete } from "../icons/Delete"
 import { Share } from "../icons/Share"
+import { Twitter } from "../icons/Twitter"
+import { YouTube } from "../icons/Youtube"
 
 interface CardProps{
   title : string,
@@ -10,12 +13,12 @@ export function Card(props :CardProps){
   return <div className="border border-gray-200 shadow-md w-72 min-h-48 rounded-md">
     <div className="flex justify-between m-3 items-center">
       <div className="flex items-center gap-3">
-        <Share/>
+        {props.type === "tweet" ? <Twitter/> : <YouTube/>}
         {props.title}
       </div>
       <div className="flex items-center gap-3">
         <Share/>
-        <Share/>
+        <Delete/>
       </div>
     </div>
 

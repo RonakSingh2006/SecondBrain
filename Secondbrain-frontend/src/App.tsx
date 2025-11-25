@@ -8,13 +8,13 @@ function App() {
   return (
     <>
       <div className="flex justify-end gap-4">
-        <Button startIcon={<Plus size="md"/>} variant="primary" size="md" text="Share Brain" onClick={()=>console.log("hello")}/>
-        <Button startIcon={<Share size="md"/>} variant="secondry" size="md" text="Add Content" onClick={()=>console.log("hello")}/>
+        <Button startIcon={<Share/>} variant="primary" size="md" text="Share Brain" onClick={()=>console.log("hello")}/>
+        <Button startIcon={<Plus/>} variant="secondry" size="md" text="Add Content" onClick={()=>console.log("hello")}/>
       </div>
       
       <div className="flex gap-4">
-        <Card title="TUF Sheet" link="https://x.com/Ronak_Singh_20/status/1926171421312512075" type="tweet"/>
-        <Card title="Open Source" link="https://www.youtube.com/watch?v=U2O0saEXhDg" type="youtube"/>
+        <Card title="Pakistan" link="https://x.com/virendersehwag/status/1921236534935666812" type="tweet"/>
+        <Card title="n8n" link="https://www.youtube.com/watch?v=NYCUMKUBcXM" type="youtube"/>
       </div>
     </>
   )
