@@ -1,5 +1,5 @@
 import { cloneElement, isValidElement, type ReactElement } from "react"
-import type { IconProps } from "../../icons/types";
+import type { IconProps } from "../icons/types";
 
 interface ButtonProps{
   variant : "primary" | "secondry",
