@@ -7,7 +7,9 @@ interface ButtonProps{
   text : string,
   startIcon? : ReactElement<IconProps>,
   endIcon? : ReactElement<IconProps>,
-  onClick : ()=>void
+  onClick : ()=>void,
+  className? : string,
+  loading? : boolean
 }
 
 const vatiantStyle = {
@@ -27,7 +29,7 @@ export function Button(props :ButtonProps){
   const startIcon = props.startIcon && isValidElement(props.startIcon) ? cloneElement(props.startIcon,{size}) : null;
   const endIcon = props.endIcon && isValidElement(props.endIcon) ? cloneElement(props.endIcon,{size}) : null;
 
-  return <button className={`${vatiantStyle[props.variant]} ${vaiantSize[size]} rounded-md font-semibold m-1 flex justify-between gap-2 items-center cursor-pointer hover:outline-2` } onClick={props.onClick} >
+  return <button className={`${vatiantStyle[props.variant]} ${vaiantSize[size]} rounded-md font-semibold m-1 flex justify-between gap-2 items-center cursor-pointer hover:outline-2 ${props.className} ${props.loading ? "opacity-60 cursor-not-allowed!" : ""}` } onClick={props.onClick} disabled={props.loading} >
     {startIcon}
     {props.text}
     {endIcon}
