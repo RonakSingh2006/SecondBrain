@@ -3,11 +3,14 @@ import { useRef } from "react";
 import { Button } from "../components/Button"
 import { Input } from "../components/Input"
 import { BACKEND_URL } from "../config";
+import { useNavigate } from "react-router-dom";
 
 export function SignIn(){
 
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+
+  const navigate = useNavigate();
 
   async function signin(){
     const username = usernameRef.current?.value;
@@ -24,6 +27,8 @@ export function SignIn(){
     if (passwordRef.current) passwordRef.current.value = "";
 
     alert(output.data.message);
+
+    navigate('/dashboard');
   }
 
   return <div className="h-screen w-screen flex justify-center items-center bg-gray-200">
